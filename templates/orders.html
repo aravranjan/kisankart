@@ -1,58 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}My Orders - KissanKart{% endblock %}
-
 {% block content %}
-<div class="container padding mt-5">
-    <div class="row">
-        <div class="col-12">
-            <h2 class="display-4">Order History</h2>
-            <hr>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <h3 class="mb-3">Pending / Placed Orders</h3>
-            {% if pending_orders %}
-            {% for order in pending_orders %}
-            <div class="card mb-3 border-warning">
-                <div class="card-body">
-                    <h5 class="card-title">{{ order.product_name }}</h5>
-                    <p class="card-text mb-1"><strong>Quantity:</strong> {{ order.qty }}</p>
-                    <p class="card-text mb-1"><strong>Total:</strong> ₹{{ order.total_price }}</p>
-                    <p class="card-text mb-1"><strong>Payment:</strong> {{ order.payment_method.upper() }}</p>
-                    <p class="card-text mb-3 text-muted small">Placed on: {{ order.created_at.strftime('%Y-%m-%d %H:%M')
-                        }}</p>
-
-                    <form action="{{ url_for('complete_order', order_id=order._id) }}" method="POST">
-                        <button type="submit" class="btn btn-warning btn-sm">Simulate Delivery Completion</button>
-                    </form>
+<div class="bg-gradient-green">
+    <div class="centering-wrapper">
+        <div class="glass-card" style="max-width: 800px;">
+            <h2 class="text-center mb-4">My Orders 📦</h2>
+            <div class="list-group">
+                {% if pending_orders %}
+                {% for order in pending_orders %}
+                <div class="list-group-item mb-2 shadow-sm rounded border-left border-success"
+                    style="border-left-width: 5px !important;">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="text-success">{{ order.product_name }}</h5>
+                        <span class="badge badge-success px-3 py-2">Ordered</span>
+                    </div>
+                    <p class="mb-0 text-muted">Quantity: {{ order.qty }} unit | Total: ₹{{ order.total_price }}</p>
+                    <small class="text-muted">Placed on: {{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
                 </div>
-            </div>
-            {% endfor %}
-            {% else %}
-            <p class="text-muted">No pending orders.</p>
-            {% endif %}
-        </div>
-
-        <div class="col-md-6">
-            <h3 class="mb-3 text-success">Successful Deliveries</h3>
-            {% if successful_orders %}
-            {% for order in successful_orders %}
-            <div class="card mb-3 border-success bg-light">
-                <div class="card-body">
-                    <h5 class="card-title text-success">{{ order.product_name }}</h5>
-                    <p class="card-text mb-1"><strong>Quantity:</strong> {{ order.qty }}</p>
-                    <p class="card-text mb-1"><strong>Total:</strong> ₹{{ order.total_price }}</p>
-                    <p class="card-text text-muted small">Delivered at: {{ order.delivered_at.strftime('%Y-%m-%d %H:%M')
-                        if order.delivered_at else 'N/A' }}</p>
+                {% endfor %}
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-shopping-basket fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No orders yet. Go shop some fresh produce!</p>
+                    <a href="{{ url_for('consumer') }}" class="btn btn-success">Start Shopping</a>
                 </div>
+                {% endif %}
             </div>
-            {% endfor %}
-            {% else %}
-            <p class="text-muted">No successful orders yet.</p>
-            {% endif %}
         </div>
     </div>
 </div>
