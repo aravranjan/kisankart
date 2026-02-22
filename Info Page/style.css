@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+/*---Media Queries --*/
+@media (max-width: 992px) {
+
+  }
+@media (max-width: 768px) {
+  
+}
+@media (max-width: 576px) {
+  
+}
+
+.nav-spread {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly; 
+    align-items: center;
+    
+}
+
+.card-header {
+    font-size: 1.1rem;
+}
+
+.border {
+    border-style: dashed !important;
+}
+/*---Firefox Bug Fix --*/
+.carousel-item {
+    height:calc(100vh - 72px);
+}
+
+.carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center 20%; 
+
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+.btn-primary {
+    background-color: #19a922;
+    border: 1px solid #f2f9a1;
+
+}
+
+.btn-primary:hover{
+    background-color:#1d762d ;
+    border: 1px solid #f2f9a1;
+
+}
+
+
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}
+
+/* ===== MODERN E-COMMERCE NAVBAR ===== */
+
+.custom-navbar {
+    background: linear-gradient(
+        90deg,
+        #c9d84a 0%,   
+        #b7d44a 40%,
+        #9fd44a 100% /* green */
+    );
+
+    padding: 14px 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    height: 72px;
+    background-color: #82f382;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.custom-navbar .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.custom-navbar .navbar-brand {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-navbar .navbar-brand img {
+    height: 65px;
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.custom-navbar .nav-link {
+    color: #efefef;
+    font-weight: 500;
+    padding: 0 16px;
+    line-height: 72px;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #2e7d32;
+}
+
+
+
+/*
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/
+
+
+
+
+
+
+
+
