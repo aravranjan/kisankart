@@ -8,16 +8,24 @@
   
 }
 @media (max-width: 576px) {
-
+  
 }
+
 .nav-spread {
     display: flex;
     width: 100%;
     justify-content: space-evenly; 
     align-items: center;
-    c
+    
 }
 
+.card-header {
+    font-size: 1.1rem;
+}
+
+.border {
+    border-style: dashed !important;
+}
 /*---Firefox Bug Fix --*/
 .carousel-item {
     height:calc(100vh - 72px);
@@ -48,63 +56,7 @@
 
 }
 
-.parallax-section {
-    position: relative;
-    width: 100%;
 
-    height: 90vh;          
-    min-height: 600px;
-
-    background-image: url("img/stats.jpg"); 
-    background-size: cover;
-    background-position: center 45%;        
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.parallax-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.35);
-}
-.parallax-content {
-    position: relative;
-    z-index: 2;
-    color: #ffffff;
-    padding: 20px;
-}
-.parallax-content h2 {
-    font-size: 3rem;
-    font-weight: 700;
-}
-.parallax-content p {
-    font-size: 1.3rem;
-    margin-top: 10px;
-}
-
-/* Enable parallax ONLY on desktop */
-@media (min-width: 992px) {
-    .parallax-section {
-        background-attachment: fixed;
-    }
-}
-
-/* Mobile optimization */
-@media (max-width: 768px) {
-    .parallax-section {
-        height: 70vh;
-        min-height: 450px;
-        background-position: center center;
-        background-attachment: scroll;
-    }
-
-    .parallax-content h2 {
-        font-size: 2rem;
-    }
-}
 /*--- Bootstrap Padding Fix --*/
 [class*="col-"] {
     padding: 1rem;
@@ -161,69 +113,6 @@
     color: #2e7d32;
 }
 
-.jumbotron {
-    background-image: url("img/soil.jpg"); 
-    background-size: cover;               
-    background-position: center;          
-    background-repeat: no-repeat;
-    color: rgb(114, 118, 86);                          
-    margin-bottom: 0;
-}
-
-.jumbotron .lead {
-    font-size: 1.2rem;
-    line-height: 1.8;
-}
-
-.welcome-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px 20px;
-}
-
-.welcome-section h1 {
-    color: #07350a;
-    font-weight: 800;
-    margin-bottom: 20px;
-    text-align: center;
-    width: 100%;
-}
-
-.tech-icon {
-    font-size: 3rem;
-    transition: 0.3s ease;
-}
-
-.fas-html5 { color: #e34c26; }
-.fab-python { color: #3776ab; }
-.fab-css3-alt { color: #1572b6; }
-
-.tech-icon:hover {
-    transform: scale(1.2);
-}
-
-.fa-code {
-    color: #e54d26;
-    font-size:4em;
-    margin:1em;
-}
-
-.fa-python {
-    background: linear-gradient(135deg, #3776ab, #ffd43b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 4em;
-    margin:1em;
-}
-
-.fa-css3 {
-    color: #2163af;
-    font-size:4em;
-    margin:1em;
-}
 
 
 /*

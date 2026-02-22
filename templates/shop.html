@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-gradient-green">
+    <div class="centering-wrapper">
+        <div class="glass-card" style="max-width: 800px;">
+            <h2 class="text-center mb-4">Available Crops 🌽</h2>
+            <div class="list-group">
+                {% for product in products %}
+                <div class="list-group-item d-flex justify-content-between align-items-center mb-2 shadow-sm rounded">
+                    <div>
+                        <h5 class="mb-1 text-success">{{ product.name }}</h5>
+                        <p class="mb-0 text-muted small">Location: {{ product.area }} | Stock: {{ product.qty }}kg</p>
+                        <h6 class="mt-2">₹{{ product.price }}/kg</h6>
+                    </div>
+                    <form action="{{ url_for('buy_product', product_id=product._id) }}" method="POST">
+                        <button type="submit" class="btn btn-success btn-sm" {{ 'disabled' if product.qty <=0 }}>Buy
+                            1kg</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}

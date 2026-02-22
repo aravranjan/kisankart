@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+.nav-spread {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.card-header {
+    font-size: 1.1rem;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+}
+
+[class*="col-"] {
+    padding: 1rem;
+}
+
+.forecast-item img {
+    width: 50px;
+    height: 50px;
+}
+
+.weather-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
