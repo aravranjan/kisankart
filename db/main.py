@@ -170,10 +170,11 @@ def try_add_farmer_to_db(farmer:Farmer):
 
 def get_products_from_farmer(farmer:Farmer,get_expired:bool=True):
     fid = farmer.id
-    filter_ = {"_id":fid}
+    filter_ = {"farmer_id":fid}
+    print(filter_)
     if not get_expired:
         filter_["exp_date"] = {"$gt":datetime.datetime.now().timestamp()}
-    print(filter_)
+
     res = PRODUCT_DB.find(filter_)
     out = []
     for p in res:
@@ -201,9 +202,47 @@ def add_to_bucket(customer_id:uuid.UUID,item:OrderItem):
     BUCKETS_DB.insert_one(b.__dict__)
 
 def doshidd():
-    """c
-    farmer.id = "1"
-    try_add_farmer_to_db(farmer)
-    """
-    p = Product(uuid.uuid4(),"balls",Location(1,1),12.0,12.0,Image.new('RGB',(10,10)),int(datetime.datetime.now().timestamp()))
-    
+    """Test adding a farmer and a product to the database"""
+
+    # Create test objects
+    test_location = Location(1.2345, 6.7890)  # Random coordinates for location
+    test_farmer = Farmer(
+        name="John Doe",
+        phone_num=1234567890,
+        location=test_location,
+        profile_pic=Image.new("RGB", (100, 100)),  # Placeholder image
+        bio="A passionate farmer!"
+    )
+
+    # Try adding the farmer to the database
+    try:
+        try_add_farmer_to_db(test_farmer)
+        print(f"Farmer {test_farmer.name} added successfully!")
+    except DuplicateEntry as e:
+        print(f"Error adding farmer: {e.message}")
+
+    # Create a product for the farmer
+    test_product = Product(
+        farmer_id=test_farmer.id,
+        name="Fresh Tomatoes",
+        location=test_location,
+        price_per_kg=5.0,
+        stock_in_kg=100,
+        product_image=Image.new("RGB", (10, 10)),  # Placeholder image
+        exp_date=int(datetime.datetime.now().timestamp()) + 3600  # 1 hour from now
+    )
+
+    # Try adding the product to the database
+    try:
+        add_product(test_product)
+        print(f"Product {test_product.name} added successfully!")
+    except DuplicateEntry as e:
+        print(f"Error adding product: {e.message}")
+
+    # Optionally, you could also test fetching products from the farmer
+    products = get_products_from_farmer(test_farmer)
+    print(test_farmer.id,products)
+    for product in products:
+        print(f"Product found: {product}")
+
+doshidd()
