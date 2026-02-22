@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Crop Details</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #56ab2f, #a8e063);
+}
+
+.container {
+    width: 500px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn:hover {
+    background: #1b5e20;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Add Crop Details 🌾</h2>
+
+    <!-- Important: enctype for image upload -->
+    <form action="/add_crop" method="POST" enctype="multipart/form-data">
+
+        <div class="input-group">
+            <label>Crop Name</label>
+            <input type="text" name="crop_name" required>
+        </div>
+
+        <div class="input-group">
+            <label>Area Grown (city grown)</label>
+            <input type="number" name="area" required>
+        </div>
+
+        <div class="input-group">
+            <label>Quantity (in kg)</label>
+            <input type="number" name="quantity" required>
+        </div>
+
+        <div class="input-group">
+            <label>Price per kg (₹)</label>
+            <input type="number" name="price" required>
+        </div>
+
+        <div class="input-group">
+            <label>Random Market Value (₹)</label>
+            <input type="number" id="market_value" name="market_value" readonly>
+        </div>
+
+        <div class="input-group">
+            <label>Upload Farm Photo</label>
+            <input type="file" name="farm_photo" accept="image/*">
+        </div>
+
+        <button type="button" class="btn" onclick="generateMarketValue()">Generate Market Value</button>
+        <br><br>
+        <button type="submit" class="btn">Submit</button>
+
+    </form>
+</div>
+
+<script>
+function generateMarketValue() {
+  
+    let randomValue = 
+    document.getElementById("market_value").value = randomValue;
+}
+</script>
+
+</body>
+</html>

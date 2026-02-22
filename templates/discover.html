@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Discover Fresh Produce - KissanKart{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    .product-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-img {
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .out-of-stock {
+        filter: grayscale(100%);
+        opacity: 0.6;
+    }
+
+    .badge-expired {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .price-tag {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #2e7d32;
+    }
+
+    #map {
+        height: 400px;
+        border-radius: 16px;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow);
+        z-index: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container padding mt-4">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2 class="display-4">Fresh from Local Farms</h2>
+            <p class="lead">Supporting local farmers, one harvest at a time.</p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="mb-3">Explore Nearby Produce</h3>
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if products %}
+        {% for product in products %}
+        {% set is_out_of_stock = product.qty <= 0 %} {% set is_expired=product.is_expired %} <div
+            class="col-md-3 col-sm-6 mb-4">
+            <div class="card product-card h-100 {{ 'out-of-stock' if (is_out_of_stock or is_expired) else '' }}">
+                <img src="{{ url_for('static', filename='uploads/products/' + product.image) if product.image else 'https://via.placeholder.com/300x180' }}"
+                    class="card-img-top product-img" alt="{{ product.name }}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-muted small mb-2">{{ product.category }}</p>
+                    <div class="mt-auto">
+                        <p class="price-tag mb-1">₹{{ product.price }} <small class="text-muted">/ unit</small></p>
+                        <p class="small mb-2">
+                            {% if is_expired %}
+                            <span class="badge badge-secondary">Expired</span>
+                            {% elif is_out_of_stock %}
+                            <span class="badge badge-danger">Out of Stock</span>
+                            {% else %}
+                            <span class="badge badge-success">In Stock: {{ product.qty }}</span>
+                            {% endif %}
+                        </p>
+                        <a href="{{ url_for('product_detail', product_id=product._id) }}"
+                            class="btn btn-outline-primary btn-block {{ 'disabled' if (is_out_of_stock or is_expired) else '' }}">View
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="col-12 text-center">
+        <p class="lead text-muted">No products available in your area yet. Try adjusting your location or check back
+            later!</p>
+    </div>
+    {% endif %}
+</div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var map = L.map('map').setView([20.5937, 78.9629], 5); // Default to India center
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        var markers = [];
+        {% for product in products %}
+        {% if product.location_geo %}
+        var p_lat = {{ product.location_geo.coordinates[1] }
+    };
+    var p_lng = {{ product.location_geo.coordinates[0] }};
+    var marker = L.marker([p_lat, p_lng])
+        .addTo(map)
+        .bindPopup("<b>{{ product.name }}</b><br>₹{{ product.price }}<br><a href='{{ url_for('product_detail', product_id=product._id) }}'>View Details</a>");
+    markers.push(marker);
+    {% endif %}
+    {% endfor %}
+
+    if (markers.length > 0) {
+        var group = new L.featureGroup(markers);
+        map.fitBounds(group.getBounds(), { padding: [50, 50] });
+    }
+    });
+</script>
+{% endblock %}

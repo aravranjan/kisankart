@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Put Products for Sale - KissanKart{% endblock %}
+
+{% block content %}
+<div class="container padding mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="text-center">Sell Your Produce</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('list_product') }}" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Product Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        placeholder="e.g. Organic Tomatoes" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select class="form-control" id="category" name="category">
+                                        <option>Vegetables</option>
+                                        <option>Fruits</option>
+                                        <option>Grains</option>
+                                        <option>Dairy</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="price">Price (per unit)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">₹</span>
+                                            </div>
+                                            <input type="number" class="form-control" id="price" name="price"
+                                                step="0.01" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="qty">Quantity Available</label>
+                                        <input type="number" class="form-control" id="qty" name="qty" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="harvest_date">Harvested Date</label>
+                                    <input type="date" class="form-control" id="harvest_date" name="harvest_date"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="expiry_date">Best Before Date</label>
+                                    <input type="date" class="form-control" id="expiry_date" name="expiry_date"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product_image">Product Image</label>
+                                    <input type="file" class="form-control-file" id="product_image" name="product_image"
+                                        accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4"
+                                placeholder="Describe the quality, farming method, etc."></textarea>
+                        </div>
+                        <input type="hidden" id="lat" name="lat">
+                        <input type="hidden" id="lng" name="lng">
+                        <button type="submit" class="btn btn-success btn-lg btn-block mt-4">List Product for
+                            Sale</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            document.getElementById('lat').value = position.coords.latitude;
+            document.getElementById('lng').value = position.coords.longitude;
+        });
+    }
+</script>
+{% endblock %}
