@@ -2,11 +2,15 @@
 import uuid
 import datetime
 import asyncio
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
 
 from PIL import Image
 from pymongo import MongoClient
 
-uri = 'mongodb+srv://astondsouza369_db_user:yoopass@test.ueiwc3g.mongodb.net/?appName=test'
+uri = f'mongodb+srv://{os.getenv("MONGO_DB_USERNAME")}:{os.getenv("MONGO_DB_PASSWORD")}@test.ueiwc3g.mongodb.net/?appName=test'
 DB_CLIENT = MongoClient(uri, uuidRepresentation="standard")
 
 try:
@@ -140,3 +144,16 @@ async def add_product(p:Product):
     if f:= PRODUCT_DB.find_one({"_id":p.id}):
         raise DuplicateEntry(f"product with id {p.id} already exists.",None,None)
     PRODUCT_DB.insert_one(p.__dict__)
+
+async def doshidd():
+    """c
+    farmer.id = "1"
+    await try_add_farmer_to_db(farmer)
+    """
+    p = Product(uuid.uuid4(),"balls",Location(1,1),12.0,12.0,Image.new('RGB',(10,10)),int(datetime.datetime.now().timestamp()))
+    p.farmer_id = '1'
+    farer = Farmer("balls",123456789,Location(12.0,12.0),Image.new('RGB',(10,10)),"yoo whaddup")
+    farer.id = '1'
+    print(str((await get_products_from_farmer(farer))[0]))
+
+asyncio.run(doshidd())
